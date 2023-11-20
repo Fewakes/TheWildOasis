@@ -1,4 +1,4 @@
-import React from "react";
+import { createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
 import { HiEllipsisVertical } from "react-icons/hi2";
 import styled from "styled-components";
@@ -65,11 +65,12 @@ const StyledButton = styled.button`
   }
 `;
 
-const MenusContext = React.createContext();
+const MenusContext = createContext();
 
 function Menus({ children }) {
-  const [openId, setOpenId] = React.useState("");
-  const [position, setPosition] = React.useState(null);
+  const [openId, setOpenId] = useState("");
+  const [position, setPosition] = useState(null);
+
   const close = () => setOpenId("");
   const open = setOpenId;
 
@@ -83,9 +84,11 @@ function Menus({ children }) {
 }
 
 function Toggle({ id }) {
-  const { openId, open, close, setPosition } = React.useContext(MenusContext);
+  const { openId, close, open, setPosition } = useContext(MenusContext);
 
   function handleClick(e) {
+    e.stopPropagation();
+
     const rect = e.target.closest("button").getBoundingClientRect();
     setPosition({
       x: window.innerWidth - rect.width - rect.x,
@@ -103,13 +106,13 @@ function Toggle({ id }) {
 }
 
 function List({ id, children }) {
-  const { openId, position, close } = React.useContext(MenusContext);
-  const ref = useOutsideClick(close);
+  const { openId, position, close } = useContext(MenusContext);
+  const ref = useOutsideClick(close, false);
 
   if (openId !== id) return null;
 
   return createPortal(
-    <StyledList ref={ref} position={position}>
+    <StyledList position={position} ref={ref}>
       {children}
     </StyledList>,
     document.body
@@ -117,12 +120,13 @@ function List({ id, children }) {
 }
 
 function Button({ children, icon, onClick }) {
-  const { close } = React.useContext(MenusContext);
+  const { close } = useContext(MenusContext);
 
   function handleClick() {
     onClick?.();
     close();
   }
+
   return (
     <li>
       <StyledButton onClick={handleClick}>
@@ -133,8 +137,8 @@ function Button({ children, icon, onClick }) {
   );
 }
 
-Menus.Toggle = Toggle;
 Menus.Menu = Menu;
+Menus.Toggle = Toggle;
 Menus.List = List;
 Menus.Button = Button;
 
