@@ -77,25 +77,3 @@ The Wild Oasis Hotel Management Application is built using the following technol
 
 -   **react-hook-form**: Library for form state management and validation in React.
 
-## 🛠️ Installation Steps:
-
-<p>1. Clone the repository</p>
-
-```
-git clone https://github.com/lgope/the-wild-oasis.git
-```
-
-<p>2. Install the required dependencies </p>
-
-```
-npm install
-```
-
-<p>3. Start the development server</p>
-
-```
-npm run dev
-```
-
-
-
