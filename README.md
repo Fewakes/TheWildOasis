@@ -1,7 +1,7 @@
 ## 🎮 Demo Account
 
 You can access our application using the following demo account:
-
+-   **Link** : https://thewildoasis-cms.netlify.app/login
 -   **Email Address** : `jacob@example.com`
 -   **Password** : `pass0987`
 
